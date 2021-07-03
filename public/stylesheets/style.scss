@@ -1,0 +1,134 @@
+// @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'Bizon';
+  src: url('/font/Bizon.eot');
+  src: url('/font/Bizon.woff') format('woff'), url('/font/Bizon.otf') format('opentype'), url('/font/Bizon.svg') format('svg');
+}
+
+$green1: #21690f;
+$green2: #88c848;
+
+* {
+  font-family: 'Comfortaa', cursive;
+}
+
+.btn:focus,
+.btn:active,
+.btn-outline-success:focus,
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  outline: none;
+  box-shadow: none;
+}
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: $green2;
+  outline: none;
+  box-shadow: none;
+}
+.btn-check:focus + .btn-outline-success,
+.btn-outline-success:focus {
+  box-shadow: none;
+}
+
+.plants-home {
+  &__search-input {
+    font-family: Comfortaa, 'Font Awesome 5 Free';
+    font-weight: 900;
+  }
+  .alert-msg {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+  }
+}
+
+.card-title {
+  text-transform: capitalize;
+}
+
+.header-link {
+  text-decoration: none;
+}
+
+.create-plant__header {
+  background-image: linear-gradient(to right, $green1 0%, $green2 100%);
+  height: 20vh;
+  width: 100%;
+  h1 {
+    color: white;
+    font-family: 'Bizon';
+    font-size: 2rem;
+    @media screen and (min-width: 768px) {
+      font-size: 3rem;
+    }
+  }
+}
+
+.create-plant {
+  &__image {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    @media screen and (min-width: 768px) {
+      border-top-left-radius: 0.25rem;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0.25rem;
+    }
+  }
+  &__data {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    @media screen and (min-width: 768px) {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+      border-bottom-left-radius: 0;
+    }
+    #disabled-input {
+      pointer-events: none;
+      color: #212529;
+      background: #e9ecef;
+    }
+  }
+  &__title {
+    a {
+      display: none;
+    }
+  }
+  &__search-img {
+    display: none;
+  }
+}
+
+img {
+  height: 400px;
+  object-fit: cover;
+}
+
+footer {
+  font-size: 0.8rem;
+}
+
+.create-btn {
+  background-image: linear-gradient(to right, $green1 0%, $green2 51%, $green1 100%);
+  color: white;
+  border: none;
+  transition: 0.5s;
+  background-size: 200% auto;
+  &:hover {
+    background-position: right center;
+  }
+}
+
+.search-btn {
+  color: $green1;
+  border-color: $green1;
+  &:hover {
+    color: #fff;
+    background-color: $green1;
+    border-color: $green1;
+  }
+}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+  initial-scale=1.0"
+    />
+
+    <%- include("partials/links.ejs") %>
+
+    <title>Edit Plant</title>
+  </head>
+  <body>
+    <a href="/" class='header-link' >
+      <div class="d-flex justify-content-center align-items-center create-plant__header">
+        <h1 class="text-uppercase">Plants Life</h1>
+      </div>
+    </a>
+    <div class="container create-plant">
+      <div class="create-plant__title py-5 d-flex align-items-center justify-content-center">
+        <h1 class="text-center">Edit Your Plant <i class="far fa-edit"></i></h1>
+      </div>
+      <form class="d-flex create-plant__cards flex-column flex-md-row validated-form" action="/<%= plant.id %>?_method=PUT" method='POST' enctype="multipart/form-data" novalidate >
+        <div class="card shadow-sm create-plant__image col-md-6">
+          <div class="card-body">
+            <h2 class="mb-3">Choose Image</h2>
+            <div  class="input-group mb-3"  >
+              <input type="file" class="form-control" id="uploadImageUrl" name='img' aria-describedby="uploadImageUrl" aria-label="upload">
+            </div>
+            <div class="d-flex">
+              <input
+                class="form-control me-2 create-plant__search-input"
+                type="search"
+                placeholder="Search Online"
+                aria-label="Search" 
+              />
+              <button class="btn btn-outline-success create-plant__search-btn" type="submit">Search</button>
+            </div>
+          </div>
+          <div class="card-body create-plant__search-img flex-column border-top justify-content-center">
+              
+              <div id="carousel" class="carousel slide mb-3" data-bs-ride="false" data-​bs-interval="false">
+                <div class="carousel-indicators">
+                  <% for( let i = 0; i < 10; i++ ) { %>
+                  <button
+                    type="button"
+                    data-bs-target="#carousel"
+                    data-bs-slide-to="<%= i %>"
+                    class=<%= i === 0 && "active" %>
+                    aria-current="true"
+                    aria-label="Slide <%= i + 1 %> "
+                  ></button>
+                  <% } %>
+                </div>
+                <div class="carousel-inner" id="carousel-imgs"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+
+            <div class="d-grid gap-2">
+              <button id='select-img-btn' class="btn btn-outline-dark" type="button">Select Image</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm create-plant__data col-md-6">
+          <div class="card-body">
+              <input id='disabled-input' name='img'  class="form-control mb-3" type="text" placeholder="Image Url" aria-label="Disabled input example" value='<%= plant.img %>' required>
+              <div class="invalid-feedback">
+                Please search and select an image.
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Name</span>
+                <input type="text" class="form-control" aria-label="Create plant input" id="plant-name" name="name" value='<%= plant.name %>' required />
+                <div class="invalid-feedback">
+                  Please insert a plant name.
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="origin">Origin</label>
+                <select class="form-select select-options" id="origin" name="origin">
+                  <option>Choose...</option>
+                  <option value="Europe" <%= plant.origin === 'Europe' && 'selected' %>>Europe</option>
+                  <option value="Asia" <%= plant.origin === 'Asia' && 'selected' %> >Asia</option>
+                  <option value="Africa" <%= plant.origin === 'Africa' && 'selected' %> >Africa</option>
+                  <option value="North America" <%= plant.origin === 'North America' && 'selected' %> >North America</option>
+                  <option value="South America" <%= plant.origin === 'South America' && 'selected' %> >South America</option>
+                  <option value="Australia"<%= plant.origin === 'Australia' && 'selected' %> >Australia</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Temperature</span>
+                <input type="text" class="form-control" aria-label="Create plant input" name="temperature" placeholder="Insert Temperature Range" />
+              </div>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="water-need">Water Need</label>
+                <select class="form-select select-options" id="water-need" name="waterNeed">
+                  <option selected>Choose...</option>
+                  <option value="Low" <%= plant.waterNeed === 'Low' && 'selected' %>>Low</option>
+                  <option value="Medium" <%= plant.waterNeed === 'Medium' && 'selected' %>>Medium</option>
+                  <option value="Important" <%= plant.waterNeed === 'Important' && 'selected' %>>Important</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="sun-exposure">Sun Exposure</label>
+                <select class="form-select select-options" id="sun-exposure" name="sunExposure">
+                  <option selected>Choose...</option>
+                  <option value="Full Sun" <%= plant.sunExposure === 'Full Sun' && 'selected' %>>Full Sun</option>
+                  <option value="Part Sun" <%= plant.sunExposure === 'Part Sun' && 'selected' %>>Part Sun</option>
+                  <option value="Part Shade" <%= plant.sunExposure === 'Part Shade' && 'selected' %>>Part Shade</option>
+                  <option value="Full Shade" <%= plant.sunExposure === 'Full Shade' && 'selected' %>>Full Shade</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="soil-moisture">Soil Moisture</label>
+                <select class="form-select select-options" id="soil-moisture" name="soilMoisture">
+                  <option selected>Choose...</option>
+                  <option value="Well Drained Soil" <%= plant.soilMoisture === 'Well Drained Soil' && 'selected' %>>Well Drained Soil</option>
+                  <option value="Moist Soil" <%= plant.soilMoisture === 'Moist Soil' && 'selected' %>>Moist Soil</option>
+                  <option value="Wet Soil" <%= plant.soilMoisture === 'Wet Soil' && 'selected' %>>Wet Soil</option>
+                  <option value="Water Plants" <%= plant.soilMoisture === 'Water Plants' && 'selected' %>>Water Plants</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="soil-type">Soil Type</label>
+                <select class="form-select select-options" id="soil-type" name="soilType">
+                  <option selected>Choose...</option>
+                  <option value="Cactus and Succulent Mix" <%= plant.soilType === 'Cactus and Succulent Mix' && 'selected' %>>Cactus and Succulent Mix</option>
+                  <option value="Potting Soil" <%= plant.soilType === 'Potting Soil' && 'selected' %>>Potting Soil</option>
+                  <option value="Potting Mix" <%= plant.soilType === 'Potting Mix' && 'selected' %>>Potting Mix</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="propagation">Propagation</label>
+                <select class="form-select select-options" id="propagation" name="propagation">
+                  <option selected>Choose...</option>
+                  <option value="Cutting" <%= plant.propagation === 'Cutting' && 'selected' %>>Cutting</option>
+                  <option value="Division" <%= plant.propagation === 'Division' && 'selected' %>>Division</option>
+                  <option value="Layering" <%= plant.propagation === 'Layering' && 'selected' %>>Layering</option>
+                  <option value="Grafting" <%= plant.propagation === 'Grafting' && 'selected' %>>Grafting</option>
+                  <option value="Rhizome" <%= plant.propagation === 'Rhizome' && 'selected' %>>Rhizome</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Repotting</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="repotting"
+                  placeholder="Choose a Date..."
+                  aria-label="Create plant input"
+                  value='<%= plant.repotting %>'
+                />
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Fertilizer</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="fertilizer"
+                  placeholder="Choose a Date..."
+                  aria-label="Create plant input"
+                  value='<%= plant.fertilizer %>'
+                />
+              </div>
+              <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Write a note here..." id="notes" name="notes"
+                  ><%= plant.notes %></textarea>
+                <label for="notes">Notes</label>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary" type="button">Edit Plant!</button>
+              </div>
+          </div>
+        </div>
+      </form>
+      <div class="d-flex justify-content-center align-items-center pt-5 create-plant__go-back">
+        <a role="button" href="/" class="btn btn-outline-dark text-capitalize" type="button">Back to my plants</a>
+      </div>
+    </div>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+    <script src="/scripts/datepicker.js"></script>
+    <script src="/scripts/search.js"></script>
+    <script src="/scripts/utils.js"></script>
+    <script src="/scripts/validate.js"></script>
+  </body>
+</html>
+
+
+
+

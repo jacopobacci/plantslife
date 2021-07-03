@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+  initial-scale=1.0"
+    />
+
+    <%- include("partials/links.ejs") %>
+
+    <title>Plants Life</title>
+  </head>
+  <body>
+    <a href="/" class="header-link">
+      <img class="img-fluid home-img" src="images/home.png" alt="plants life home image" />
+    </a>
+    <div class="container pb-5 plants-home min-vh-100">
+      <div class="search-create py-5 d-grid gap-2 col-md-4 mx-auto">
+        <form class="d-flex" action="/search">
+          <input
+            class="form-control plants-home__search-input me-2"
+            type="search"
+            placeholder="&#xF002;"
+            aria-label="Search"
+            name="name"
+          />
+          <button class="btn btn-outline-success search-btn" type="submit">Search</button>
+        </form>
+        <a class="btn btn-success mt-3 create-btn" href="/create-plant" role="button">Create New Plant</a>
+      </div>
+      <%- include("partials/flash.ejs") %>
+      <div class="flex-column plants-cards flex-md-row flex-wrap d-md-flex justify-content-center">
+        <div class="card shadow-sm main-card mt-5 col-md-6 col-lg-4 mx-lg-4">
+          <img src="<%= searchedPlant.img %>" class="card-img-top rounded-top" alt="plant image" />
+          <div class="card-body">
+            <h4 class="card-title text-center"><%= searchedPlant.name %></h4>
+            <div class="mt-4">
+              <table class="table">
+                <tr>
+                  <td scope="col">Origin</td>
+                  <td scope="col"><%= searchedPlant.origin %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Temperature</td>
+                  <td scope="col" class="temperature"><%= searchedPlant.temperature %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Water Need</td>
+                  <td scope="col"><%= searchedPlant.waterNeed %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Sun Exposure</td>
+                  <td scope="col"><%= searchedPlant.sunExposure %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Soil Moisture</td>
+                  <td scope="col"><%= searchedPlant.soilMoisture %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Soil Type</td>
+                  <td scope="col"><%= searchedPlant.soilType %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Repotting</td>
+                  <td scope="col" class="repotting"><%= searchedPlant.repotting %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Fertilizer</td>
+                  <td scope="col" class="fertilizer"><%= searchedPlant.fertilizer %></td>
+                </tr>
+                <tr>
+                  <td scope="col">Propagation</td>
+                  <td scope="col"><%= searchedPlant.propagation %></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5>Notes</h5>
+            <p class="plant-notes"><%= searchedPlant.notes %></p>
+          </div>
+
+          <form id="delete-plant" method="POST" class="d-flex" action="/<%= searchedPlant.id%>?_method=DELETE">
+            <div
+              class="modal fade"
+              id="confirmDelete<%= searchedPlant.id%>"
+              tabindex="-1"
+              aria-labelledby="confirmDeleteLabel<%= searchedPlant.id%>"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteLabel<%= searchedPlant.id%>">Delete Plant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure to delete <span class="text-capitalize"><%= searchedPlant.name %></span>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body btn-group">
+              <a role="button" href="/edit-plant/<%= searchedPlant.id%>" class="btn btn-outline-dark text-capitalize mb-2"
+                >Edit Plant</a
+              >
+              <button
+                class="btn btn-outline-danger text-capitalize mb-2"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmDelete<%= searchedPlant.id%>"
+              >
+                Delete
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center create-plant__go-back">
+      <a role="button" href="/" class="btn btn-outline-dark text-capitalize" type="button">Back to my plants</a>
+    </div>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+
+    <script src="scripts/notSpecifiedUtil.js"></script>
+  </body>
+</html>
