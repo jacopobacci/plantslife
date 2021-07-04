@@ -10,4 +10,3 @@
 - Search through your plants (thanks to Express)
 - Completely responsive (thanks to Bootstrap)
 - Update and delete toast messages (thanks to Connect-Flash)
-- Delete modal confirmation
