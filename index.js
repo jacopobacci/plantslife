@@ -1,19 +1,26 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const express = require('express');
-const app = express();
+const helmet = require('helmet');
 const methodOverride = require('method-override');
-const session = require('express-session');
 const flash = require('connect-flash');
+const mongoSanitize = require('express-mongo-sanitize');
 const plants = require('./routes/plants');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const app = express();
 
 app.use(
   session({
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
+    name: 'session',
     secret: 'plants-life',
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
+      // secure: true,
       expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
@@ -24,6 +31,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(flash());
+app.use(mongoSanitize());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 

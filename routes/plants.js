@@ -10,14 +10,16 @@ const upload = multer({ storage });
 const date = new Date().getFullYear();
 
 const Plant = require('../models/plant');
+const dbUrl = process.env.DB_URL;
+// 'mongodb://localhost:27017/plants-life'
 
 mongoose
-  .connect('mongodb://localhost:27017/plantsLife', { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('MONGO CONNECTION OPEN!!!');
+    console.log('Database connected!');
   })
   .catch((err) => {
-    console.log('OH NO MONGO CONNECTION ERROR!!!!');
+    console.log('Database connection error!');
     console.log(err);
   });
 
@@ -99,7 +101,6 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const plant = await Plant.findById(id);
-
     const cloudinaryImgName = plant.imageFileName;
     await cloudinary.uploader.destroy(cloudinaryImgName);
     await Plant.findByIdAndDelete(id);
