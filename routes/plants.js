@@ -10,8 +10,7 @@ const upload = multer({ storage });
 const date = new Date().getFullYear();
 
 const Plant = require('../models/plant');
-const dbUrl = process.env.DB_URL;
-// 'mongodb://localhost:27017/plants-life'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/plants-life';
 
 mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -26,8 +25,12 @@ mongoose
 // GET
 
 router.get('/', async (req, res) => {
-  const plants = await Plant.find({});
-  res.render('home.ejs', { date, plants });
+  try {
+    const plants = await Plant.find({});
+    res.render('home.ejs', { date, plants });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.get('/api/image/:plantImage', async (req, res) => {
@@ -50,65 +53,85 @@ router.get('/edit-plant', (req, res) => {
 });
 
 router.get('/edit-plant/:id', async (req, res) => {
-  const { id } = req.params;
-  const plant = await Plant.findById(id);
-  res.render('editplant.ejs', { date, plant });
+  try {
+    const { id } = req.params;
+    const plant = await Plant.findById(id);
+    res.render('editplant.ejs', { date, plant });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 // POST
 
 router.post('/', upload.single('img'), async (req, res) => {
-  if (req.file === undefined) {
-    const newPlant = new Plant(req.body);
-    await newPlant.save();
-  } else {
-    req.body.img = req.file.path;
-    req.body.imageFileName = req.file.filename;
-    const newPlant = new Plant(req.body);
-    await newPlant.save();
+  try {
+    if (req.file === undefined) {
+      const newPlant = new Plant(req.body);
+      await newPlant.save();
+    } else {
+      req.body.img = req.file.path;
+      req.body.imageFileName = req.file.filename;
+      const newPlant = new Plant(req.body);
+      await newPlant.save();
+    }
+    req.flash('success', 'Succesfully created plant!');
+    res.redirect('/');
+  } catch (e) {
+    console.log(e);
   }
-  req.flash('success', 'Succesfully created plant!');
-  res.redirect('/');
 });
 
 router.get('/search', async (req, res) => {
-  const { name } = req.query;
-  const searchedPlant = await Plant.findOne({ name: { $regex: name, $options: 'i' } }).exec();
-  if (searchedPlant) {
-    res.render('search.ejs', { date, searchedPlant });
-  } else {
-    req.flash('error', "The plant you are searching for doesn't exist");
-    res.redirect('/');
+  try {
+    const { name } = req.query;
+    const searchedPlant = await Plant.findOne({ name: { $regex: name, $options: 'i' } }).exec();
+    if (searchedPlant) {
+      res.render('search.ejs', { date, searchedPlant });
+    } else {
+      req.flash('error', "The plant you are searching for doesn't exist");
+      res.redirect('/');
+    }
+  } catch (e) {
+    console.log(e);
   }
 });
 
 // UPDATE
 
 router.put('/:id', upload.single('img'), async (req, res) => {
-  const { id } = req.params;
-  if (req.file === undefined) {
-    await Plant.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
-  } else {
-    req.body.img = req.file.path;
-    req.body.imageFileName = req.file.filename;
-    await Plant.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+  try {
+    const { id } = req.params;
+    if (req.file === undefined) {
+      await Plant.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+    } else {
+      req.body.img = req.file.path;
+      req.body.imageFileName = req.file.filename;
+      await Plant.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+    }
+    req.flash('success', 'Succesfully updated plant');
+    res.redirect('/');
+  } catch (e) {
+    console.log(e);
   }
-  req.flash('success', 'Succesfully updated plant');
-  res.redirect('/');
 });
 
 router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
   try {
-    const plant = await Plant.findById(id);
-    const cloudinaryImgName = plant.imageFileName;
-    await cloudinary.uploader.destroy(cloudinaryImgName);
-    await Plant.findByIdAndDelete(id);
-  } catch {
-    await Plant.findByIdAndDelete(id);
+    const { id } = req.params;
+    try {
+      const plant = await Plant.findById(id);
+      const cloudinaryImgName = plant.imageFileName;
+      await cloudinary.uploader.destroy(cloudinaryImgName);
+      await Plant.findByIdAndDelete(id);
+    } catch {
+      await Plant.findByIdAndDelete(id);
+    }
+    req.flash('success', 'Succesfully deleted plant');
+    res.redirect('/');
+  } catch (e) {
+    console.log(e);
   }
-  req.flash('success', 'Succesfully deleted plant');
-  res.redirect('/');
 });
 
 module.exports = router;
