@@ -10,12 +10,13 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
 const app = express();
-
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/plants-life';
+const secret = process.env.SECRET || 'plants-life';
 app.use(
   session({
-    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
+    store: MongoStore.create({ mongoUrl: dbUrl }),
     name: 'session',
-    secret: 'plants-life',
+    secret,
     resave: false,
     saveUninitialized: false,
     cookie: {
