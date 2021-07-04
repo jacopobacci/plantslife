@@ -11,7 +11,7 @@ searchBtn.addEventListener('click', (e) => {
   e.preventDefault();
   carouselImgs.innerHTML = '';
   getPlantImage(searchInput.value);
-  if (searchInput.value === '') nameInput.value = searchInput.value;
+  if (nameInput !== null) nameInput.value = searchInput.value;
   searchInput.value = '';
 });
 
