@@ -21,8 +21,7 @@ const LocalStrategy = require('passport-local');
 const { isLoggedIn, isAuthorPlant } = require('./middleware');
 
 const app = express();
-const dbUrl = 'mongodb://localhost:27017/plants-life';
-// process.env.DB_URL ||
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/plants-life';
 const secret = process.env.SECRET || 'plants-life';
 app.use(
   session({
@@ -166,10 +165,15 @@ app.get('/search', async (req, res) => {
 app.put('/:id', isLoggedIn, isAuthorPlant, upload.single('img'), async (req, res) => {
   try {
     const { id } = req.params;
-    if (req.file === undefined) {
+    if (!req.file) {
       await Plant.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
     } else {
       req.body.img = req.file.path;
+      const plant = await Plant.findById(id);
+      const cloudinaryImgName = plant.imageFileName;
+      if (req.body.imageFileName !== cloudinaryImgName) {
+        await cloudinary.uploader.destroy(cloudinaryImgName);
+      }
       req.body.imageFileName = req.file.filename;
       await Plant.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
     }
@@ -244,8 +248,6 @@ app.post('/user/login', passport.authenticate('local', { failureFlash: true, fai
     req.flash('error', 'Login process error, try again!');
   }
 });
-
-// Logout
 
 // Logout
 

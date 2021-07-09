@@ -13,25 +13,18 @@
     <title>Plants Life</title>
   </head>
   <body>
-    <img class="img-fluid home-img" src="images/home.png" alt="plants life home image" />
-    <div class="container pb-5 plants-home min-vh-100">
-      <% if(!currentUser){ %>
-      <div class="d-flex justify-content-center pt-5">
-        <div class="col-4 btn-group" role="group">
+    <img class="img-fluid home-img pb-5" src="images/home.png" alt="plants life home image" />
+    <div class="container plants-home min-vh-100">
+      <%- include("partials/flash.ejs") %> <% if(!currentUser){ %>
+      <div class="d-flex justify-content-center pb-4">
+        <div class="col-md-4 col btn-group" role="group">
           <a href="/login" class="btn btn-outline-primary">Login</a>
           <a href="/register" class="btn btn-outline-success">Register</a>
         </div>
       </div>
-      <% } else { %>
-      <div class="d-flex justify-content-center pt-5">
-        <div class="col-4 btn-group" role="group">
-          <a href="/profile" class="btn btn-outline-dark text-capitalize"><%= currentUser.username %></a>
-          <a class="btn btn-outline-danger" href="/logout">Logout</a>
-        </div>
-      </div>
       <% } %>
 
-      <div class="search-create py-5 d-grid gap-2 col-md-4 mx-auto">
+      <div class="search-create d-grid gap-2 col-md-4 mx-auto">
         <form class="d-flex" action="/search">
           <input
             class="form-control plants-home__search-input me-2"
@@ -44,7 +37,13 @@
         </form>
         <a class="btn btn-success mt-3 create-btn" href="/create-plant" role="button">Create New Plant</a>
       </div>
-      <%- include("partials/flash.ejs") %>
+      <% if(currentUser){ %>
+      <div class="d-flex justify-content-center mt-3">
+        <div class="col-4 btn-group" role="group">
+          <a class="btn btn-outline-danger" href="/logout">Logout</a>
+        </div>
+      </div>
+      <% } %>
       <div class="flex-column plants-cards flex-md-row flex-wrap d-md-flex justify-content-center">
         <% plants.forEach(plant => { %>
         <div class="card shadow-sm main-card mt-5 col-md-6 col-lg-4 mx-lg-4">

@@ -11,27 +11,27 @@
     <title>Plants Life</title>
   </head>
   <body>
-    <img class="img-fluid home-img" src="images/home.png" alt="plants life home image" />
+    <a href="/" class="header-link">
+      <div class="d-flex justify-content-center align-items-center create-plant__header">
+        <h1 class="text-uppercase">Plants Life</h1>
+      </div>
+    </a>
     <div class="container pb-5 plants-home min-vh-100">
-      <div class="d-flex align-items-center flex-column">
+      <div class="d-flex align-items-center flex-column pt-5">
         <%- include("partials/flash.ejs") %>
-        <h1 class="bg-light text-dark p-4 rounded-pill my-5 shadow">Register</h1>
         <div class="card col-12 col-lg-4">
-          <div class="card-body shadow">
+          <div class="card-body shadow-sm">
+            <div class="card-body">
+              <div class="card-text">
+                <h1 class="text-center">Register</h1>
+              </div>
+            </div>
             <form action="/register" method="POST">
-              <div>
+              <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type=text" class="form-control" id="username" name='username' required>
               </div>
-              <div>
-                <label for="firstName" class="form-label">First Name</label>
-                <input type=text" class="form-control" id="firstName" name='firstName'>
-              </div>
-              <div>
-                <label for="lastName" class="form-label">Last Name</label>
-                <input type=text" class="form-control" id="lastName" name='lastName'>
-              </div>
-              <div>
+              <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required />
               </div>
@@ -44,12 +44,11 @@
           </div>
         </div>
       </div>
-
-      <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %> <% if(success && success.length || error &&
-      error.length) { %>
-      <script src="scripts/toast.js"></script>
-      <% } %>
-      <script src="scripts/notSpecifiedUtil.js"></script>
     </div>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %> <% if(success && success.length || error &&
+    error.length) { %>
+    <script src="scripts/toast.js"></script>
+    <% } %>
+    <script src="scripts/notSpecifiedUtil.js"></script>
   </body>
 </html>
