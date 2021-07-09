@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+  initial-scale=1.0"
+    />
+    <%- include("partials/links.ejs") %>
+    <title>Plants Life</title>
+  </head>
+  <body>
+    <img class="img-fluid home-img" src="images/home.png" alt="plants life home image" />
+    <div class="container pb-5 plants-home min-vh-100">
+      <div class="d-flex align-items-center flex-column">
+        <%- include("partials/flash.ejs") %>
+        <h1 class="bg-light text-dark p-4 rounded-pill my-5 shadow">Register</h1>
+        <div class="card col-12 col-lg-4">
+          <div class="card-body shadow">
+            <form action="/register" method="POST">
+              <div>
+                <label for="username" class="form-label">Username</label>
+                <input type=text" class="form-control" id="username" name='username' required>
+              </div>
+              <div>
+                <label for="firstName" class="form-label">First Name</label>
+                <input type=text" class="form-control" id="firstName" name='firstName'>
+              </div>
+              <div>
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type=text" class="form-control" id="lastName" name='lastName'>
+              </div>
+              <div>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required />
+              </div>
+              <button type="submit" class="btn btn-success rounded rounded-3">Sign up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %> <% if(success && success.length || error &&
+      error.length) { %>
+      <script src="scripts/toast.js"></script>
+      <% } %>
+      <script src="scripts/notSpecifiedUtil.js"></script>
+    </div>
+  </body>
+</html>

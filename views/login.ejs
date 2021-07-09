@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+  initial-scale=1.0"
+    />
+    <%- include("partials/links.ejs") %>
+    <title>Plants Life</title>
+  </head>
+  <body>
+    <img class="img-fluid home-img" src="images/home.png" alt="plants life home image" />
+    <div class="container plants-home min-vh-100">
+      <div class="d-flex align-items-center flex-column my-5">
+        <%- include("partials/flash.ejs") %>
+          <h1 class="bg-light text-dark p-4 rounded-pill mb-5 shadow">Login</h1>
+          <div class="card col-12 col-lg-4 shadow">
+            <div class="card-body">
+              <form action="/user/login" method="POST" style="border-radius: 20px">
+                <div class="mb-3">
+                  <label class="form-label" for="username">Username</label>
+                  <input class="form-control" type="text" id="username" name="username" required />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required />
+                </div>
+                <button type="submit" class="btn btn btn-outline-dark rounded rounded-3">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %> <% if(success && success.length || error &&
+      error.length) { %>
+      <script src="scripts/toast.js"></script>
+      <% } %>
+      <script src="scripts/notSpecifiedUtil.js"></script>
+    </div>
+  </body>
+</html>
