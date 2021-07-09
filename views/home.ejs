@@ -35,11 +35,11 @@
           />
           <button class="btn btn-outline-success search-btn" type="submit">Search</button>
         </form>
-        <a class="btn btn-success mt-3 mb-4 create-btn" href="/create-plant" role="button">Create New Plant</a>
+        <a class="btn btn-success mt-3 create-btn" href="/create-plant" role="button">Create New Plant</a>
       </div>
       <% if(currentUser){ %>
       <form action="/user/<%= currentUser._id %>" method="post">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-4">
           <div class="col-md-4 col btn-group" role="group">
             <a role="button" href="/logout" class="btn btn-outline-dark">Logout</a>
             <button
