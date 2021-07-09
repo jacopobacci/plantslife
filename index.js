@@ -23,6 +23,7 @@ const { isLoggedIn, isAuthorPlant } = require('./middleware');
 const app = express();
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/plants-life';
 const secret = process.env.SECRET || 'plants-life';
+// process.env.DB_URL
 
 app.use(
   session({

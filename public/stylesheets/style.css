@@ -8,6 +8,28 @@
   font-family: "Comfortaa", cursive;
 }
 
+.btn:focus,
+.btn:active,
+.btn-outline-success:focus,
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #88c848;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-check:focus + .btn-outline-success,
+.btn-outline-success:focus {
+  box-shadow: none;
+}
+
 .plants-home__search-input {
   font-family: Comfortaa, "Font Awesome 5 Free";
   font-weight: 900;
