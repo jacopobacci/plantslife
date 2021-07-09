@@ -23,6 +23,7 @@ const { isLoggedIn, isAuthorPlant } = require('./middleware');
 const app = express();
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/plants-life';
 const secret = process.env.SECRET || 'plants-life';
+
 app.use(
   session({
     store: MongoStore.create({ mongoUrl: dbUrl }),
@@ -32,7 +33,6 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      // secure: true,
       expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
@@ -255,6 +255,18 @@ app.get('/logout', (req, res) => {
   req.logout();
   req.flash('success', 'Goodbye!');
   res.redirect('/');
+});
+
+// delete user
+
+app.post('/user/:id', isLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await User.findByIdAndDelete(id);
+    res.redirect('/');
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 app.listen(process.env.PORT || 3000, () => console.log('Server Up and running'));

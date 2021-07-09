@@ -35,15 +35,47 @@
           />
           <button class="btn btn-outline-success search-btn" type="submit">Search</button>
         </form>
-        <a class="btn btn-success mt-3 create-btn" href="/create-plant" role="button">Create New Plant</a>
+        <a class="btn btn-success mt-3 mb-4 create-btn" href="/create-plant" role="button">Create New Plant</a>
       </div>
       <% if(currentUser){ %>
-      <div class="d-flex justify-content-center mt-3">
-        <div class="col-4 btn-group" role="group">
-          <a class="btn btn-outline-danger" href="/logout">Logout</a>
+      <form action="/user/<%= currentUser._id %>" method="post">
+        <div class="d-flex justify-content-center pb-4">
+          <div class="col-md-4 col btn-group" role="group">
+            <a role="button" href="/logout" class="btn btn-outline-danger">Logout</a>
+            <button
+              class="btn btn-danger"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmDelete<%= currentUser._id %>"
+            >
+              Delete User
+            </button>
+          </div>
         </div>
-      </div>
+        <div
+          class="modal fade"
+          id="confirmDelete<%= currentUser._id %>"
+          tabindex="-1"
+          aria-labelledby="confirmDeleteLabel<%= currentUser._id %>"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel<%= currentUser._id %>">Delete Plant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">Are you sure to delete your user definitely?</div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="submit" class="btn btn-primary">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
       <% } %>
+
       <div class="flex-column plants-cards flex-md-row flex-wrap d-md-flex justify-content-center">
         <% plants.forEach(plant => { %>
         <div class="card shadow-sm main-card mt-5 col-md-6 col-lg-4 mx-lg-4">
