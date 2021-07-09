@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+  initial-scale=1.0"
+    />
+    <%- include("partials/links.ejs") %>
+    <title>Plants Life</title>
+  </head>
+  <body>
+    <a href="/" class='header-link' >
+        <div class="d-flex justify-content-center align-items-center create-plant__header">
+          <h1 class="text-uppercase">Plants Life</h1>
+        </div>
+      </a>
+    <div class="container plants-home min-vh-100">
+        <%- include("partials/flash.ejs") %>
+      <div class="d-flex align-items-center flex-column mt-5">
+          <div class="card col-12 col-lg-4 shadow-sm">
+              <div class="card-body">
+                  <div class="card-text text-center"><h1>Login</h1></div>
+              </div>
+            <div class="card-body">
+              <form action="/user/login" method="POST" style="border-radius: 20px">
+                <div class="mb-3">
+                  <label class="form-label" for="username">Username</label>
+                  <input class="form-control" type="text" id="username" name="username" required />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required />
+                </div>
+                <button type="submit" class="btn btn btn-outline-dark rounded rounded-3">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %> <% if(success && success.length || error &&
+      error.length) { %>
+      <script src="scripts/toast.js"></script>
+      <% } %>
+      <script src="scripts/notSpecifiedUtil.js"></script>
+    </div>
+  </body>
+</html>
