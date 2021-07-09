@@ -89,8 +89,8 @@ app.get('/', async (req, res) => {
   try {
     const plants = await Plant.find({}).populate('author');
     res.render('home.ejs', { date, plants });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -100,8 +100,8 @@ app.get('/api/image/:plantImage', async (req, res) => {
       `https://pixabay.com/api/?key=${process.env.PIXABAY_KEY}&q=${req.params.plantImage}&image_type=photo&per_page=10`
     );
     res.send(response.data);
-  } catch (e) {
-    console.log('Error!', e.message);
+  } catch (err) {
+    console.log('Error!', err.message);
   }
 });
 
@@ -118,8 +118,8 @@ app.get('/edit-plant/:id', async (req, res) => {
     const { id } = req.params;
     const plant = await Plant.findById(id);
     res.render('editplant.ejs', { date, plant });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -140,8 +140,8 @@ app.post('/', isLoggedIn, upload.single('img'), async (req, res) => {
     }
     req.flash('success', 'Succesfully created plant!');
     res.redirect('/');
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -155,8 +155,8 @@ app.get('/search', async (req, res) => {
       req.flash('error', "The plant you are searching for doesn't exist");
       res.redirect('/');
     }
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -179,8 +179,8 @@ app.put('/:id', isLoggedIn, isAuthorPlant, upload.single('img'), async (req, res
     }
     req.flash('success', 'Succesfully updated plant');
     res.redirect('/');
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -197,8 +197,8 @@ app.delete('/:id', isLoggedIn, isAuthorPlant, async (req, res) => {
     }
     req.flash('success', 'Succesfully deleted plant');
     res.redirect('/');
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -238,14 +238,15 @@ app.get('/login', (req, res) => {
   res.render('login.ejs', { date });
 });
 
-app.post('/user/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
   try {
     req.flash('success', 'Successfully logged in!');
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
-  } catch {
+  } catch (err) {
     req.flash('error', 'Login process error, try again!');
+    console.log(err);
   }
 });
 

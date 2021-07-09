@@ -18,7 +18,7 @@
       <%- include("partials/flash.ejs") %> <% if(!currentUser){ %>
       <div class="d-flex justify-content-center pb-4">
         <div class="col-md-4 col btn-group" role="group">
-          <a href="/login" class="btn btn-outline-primary">Login</a>
+          <a href="/login" class="btn btn-outline-dark">Login</a>
           <a href="/register" class="btn btn-outline-success">Register</a>
         </div>
       </div>
@@ -41,9 +41,9 @@
       <form action="/user/<%= currentUser._id %>" method="post">
         <div class="d-flex justify-content-center pb-4">
           <div class="col-md-4 col btn-group" role="group">
-            <a role="button" href="/logout" class="btn btn-outline-danger">Logout</a>
+            <a role="button" href="/logout" class="btn btn-outline-dark">Logout</a>
             <button
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#confirmDelete<%= currentUser._id %>"

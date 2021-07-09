@@ -14,25 +14,25 @@ $green2: #88c848;
   font-family: 'Comfortaa', cursive;
 }
 
-.btn:focus,
-.btn:active,
-.btn-outline-success:focus,
-.btn-check:focus + .btn-primary,
-.btn-primary:focus {
-  outline: none;
-  box-shadow: none;
-}
-.form-control:focus {
-  color: #212529;
-  background-color: #fff;
-  border-color: $green2;
-  outline: none;
-  box-shadow: none;
-}
-.btn-check:focus + .btn-outline-success,
-.btn-outline-success:focus {
-  box-shadow: none;
-}
+// .btn:focus,
+// .btn:active,
+// .btn-outline-success:focus,
+// .btn-check:focus + .btn-primary,
+// .btn-primary:focus {
+//   outline: none;
+//   box-shadow: none;
+// }
+// .form-control:focus {
+//   color: #212529;
+//   background-color: #fff;
+//   border-color: $green2;
+//   outline: none;
+//   box-shadow: none;
+// }
+// .btn-check:focus + .btn-outline-success,
+// .btn-outline-success:focus {
+//   box-shadow: none;
+// }
 
 .plants-home {
   &__search-input {
