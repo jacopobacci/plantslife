@@ -241,7 +241,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
   try {
-    req.flash('success', 'Successfully logged in!');
+    req.flash('success', 'Welcome back!');
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
@@ -264,7 +264,16 @@ app.get('/logout', (req, res) => {
 app.post('/user/:id', isLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
+    const plants = await Plant.find({author: id});
+    for (let plant of plants) {
+      if (plant.img) {
+        const cloudinaryImgName = plant.imageFileName;
+        await cloudinary.uploader.destroy(cloudinaryImgName);
+      }
+    }
+    await Plant.deleteMany({author: id});
     await User.findByIdAndDelete(id);
+    req.flash('success', 'Succesfully deleted user')
     res.redirect('/');
   } catch (err) {
     console.log(err);
