@@ -233,8 +233,6 @@ app.post('/register', async (req, res) => {
 
 // LOGIN
 
-//Login
-
 app.get('/login', (req, res) => {
   res.render('login.ejs', { date });
 });
@@ -264,16 +262,16 @@ app.get('/logout', (req, res) => {
 app.post('/user/:id', isLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
-    const plants = await Plant.find({author: id});
+    const plants = await Plant.find({ author: id });
     for (let plant of plants) {
       if (plant.img) {
         const cloudinaryImgName = plant.imageFileName;
         await cloudinary.uploader.destroy(cloudinaryImgName);
       }
     }
-    await Plant.deleteMany({author: id});
+    await Plant.deleteMany({ author: id });
     await User.findByIdAndDelete(id);
-    req.flash('success', 'Succesfully deleted user')
+    req.flash('success', 'Succesfully deleted user');
     res.redirect('/');
   } catch (err) {
     console.log(err);

@@ -25,6 +25,7 @@
             placeholder="&#xF002;"
             aria-label="Search"
             name="name"
+            required
           />
           <button class="btn btn-outline-success search-btn" type="submit">Search</button>
         </form>
@@ -81,7 +82,7 @@
             <h5>Notes</h5>
             <p class="plant-notes"><%= searchedPlant.notes %></p>
           </div>
-
+          <% if(currentUser){ %>
           <form id="delete-plant" method="POST" class="d-flex" action="/<%= searchedPlant.id%>?_method=DELETE">
             <div
               class="modal fade"
@@ -120,6 +121,7 @@
               </button>
             </div>
           </form>
+          <% } %> 
         </div>
       </div>
     </div>
