@@ -36,7 +36,9 @@
           />
           <button class="btn btn-outline-success search-btn" type="submit">Search</button>
         </form>
+        <% if(currentUser){ %>
         <a class="btn btn-success mt-3 create-btn" href="/create-plant" role="button">Create New Plant</a>
+        <% } %> 
       </div>
       <% if(currentUser){ %>
       <form action="/user/<%= currentUser._id %>" method="post">
